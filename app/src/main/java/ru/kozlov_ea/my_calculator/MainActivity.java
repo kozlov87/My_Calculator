@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (CheckStr(inStr)) {
             int m = 0;
             m = count;
-            for (int i = 0; i < inStr.length(); i++) {
+            for (int i = count; i < inStr.length(); i++) {
                 char ch = inStr.charAt(i);
                 if ((ch == '.') || (ch >= '0' && ch <= '9')) {
-                    m = i;
+                    count++;
                 } else {
                     break;
                 }
