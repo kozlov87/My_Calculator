@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button bplus, bminus, bdiv, bmul;
     Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b0;
-    Button bAC, bC, bAns;
+    Button bAC, bC, bAns, bdot;
 
     TextView Ans;
     String inStr = "";
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bAC = (Button) findViewById(R.id.bAC);
         bC = (Button) findViewById(R.id.bC);
         bAns = (Button) findViewById(R.id.bAns);
+        bdot = (Button) findViewById(R.id.bdot);
 
         Ans = (TextView) findViewById(R.id.textView);
 
@@ -82,20 +83,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // если исходная строчка задана корректно, то разбираем её
     private String getCur() {
         String curS = "";
+        int m = 0;
+        m = count;
         if (CheckStr(inStr)) {
-            int m = 0;
-            m = count;
-            for (int i = count; i < inStr.length(); i++) {
-                char ch = inStr.charAt(i);
+            while (count < inStr.length()) {
+                char ch = inStr.charAt(count);
                 if ((ch == '.') || (ch >= '0' && ch <= '9')) {
                     count++;
                 } else {
                     break;
                 }
             }
-            if (m < count) {
-                curS = inStr.substring(m, count);
-            }
+        }
+        if (m < count) {
+            curS = inStr.substring(m, count);
         }
         return curS;
     }
@@ -107,23 +108,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private double First() {
         double curAns = 0;
         String q = "";
+        boolean flag = false;
 
         if (inStr.charAt(count) == '-') {
             count++;
-            q = getCur();
-            q = '-' + q;
+            flag= true;
+        }
 
-            if (CheckStr(q)) {
-                curAns = Double.parseDouble(q);
-            }
+        q = getCur();
+        if (flag) {
+            q = '-' + q;
+        }
+
+        if (CheckStr(q)) {
+            curAns = Double.parseDouble(q);
         }
         return curAns;
     }
 
     private Double Second() {
         double t = First();
-        for (int i = 0; i < inStr.length(); i++) {
-            char ch = inStr.charAt(i);
+        while (count < inStr.length()) {
+            char ch = inStr.charAt(count);
             switch (ch) {
                 case '*':
                     t = t * First();
@@ -142,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Double Third() {
         double t = Second();
-        for (int i = 0; i < inStr.length(); i++) {
-            char ch = inStr.charAt(i);
+        while (count < inStr.length()) {
+            char ch = inStr.charAt(count);
             switch (ch) {
                 case '+':
                     t += Second();
@@ -162,125 +168,129 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // нажатая пользователем кнопка определяет текущую операцию
     public void onClick(View v) {
-        if (CheckStr(inStr)) {
-            try {
-                switch (v.getId()) {
+        try {
+            switch (v.getId()) {
+
+                case R.id.b1:
+                    inStr += '1';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b2:
+                    inStr += '2';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b3:
+                    inStr += '3';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b4:
+                    inStr += '4';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b5:
+                    inStr += '5';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b6:
+                    inStr += '6';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b7:
+                    inStr += '7';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b8:
+                    inStr += '8';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b9:
+                    inStr += '9';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.b0:
+                    inStr += '0';
+                    Ans.setText(inStr);
+                    break;
 
 
-                    case R.id.b1:
-                        inStr += '1';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b2:
-                        inStr += '2';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b3:
-                        inStr += '3';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b4:
-                        inStr += '4';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b5:
-                        inStr += '5';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b6:
-                        inStr += '6';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b7:
-                        inStr += '7';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b8:
-                        inStr += '8';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b9:
-                        inStr += '9';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.b0:
-                        inStr += '0';
-                        Ans.setText(inStr);
-                        break;
-
-
-                    case R.id.bplus:
+                case R.id.bplus:
+                    if (CheckStr(inStr)) {
                         int w1 = inStr.length() - 1;
                         char ch1 = inStr.charAt(w1);
                         if ((ch1 == '+') || (ch1 == '-') || (ch1 == '*') || (ch1 == '/')) {
                             inStr = inStr.substring(0, w1);
                         }
-                        inStr += '+';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.bminus:
+                    }
+                    inStr += '+';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.bminus:
+                    if (CheckStr(inStr)) {
                         int w2 = inStr.length() - 1;
                         char ch2 = inStr.charAt(w2);
                         if ((ch2 == '+') || (ch2 == '-') || (ch2 == '*') || (ch2 == '/')) {
                             inStr = inStr.substring(0, w2);
                         }
-                        inStr += '-';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.bmul:
+                    }
+                    inStr += '-';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.bmul:
+                    if (CheckStr(inStr)) {
                         int w3 = inStr.length() - 1;
                         char ch3 = inStr.charAt(w3);
                         if ((ch3 == '+') || (ch3 == '-') || (ch3 == '*') || (ch3 == '/')) {
                             inStr = inStr.substring(0, w3);
                         }
-                        inStr += '*';
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.bdiv:
+                    }
+                    inStr += '*';
+                    Ans.setText(inStr);
+                    break;
+                case R.id.bdiv:
+                    if (CheckStr(inStr)) {
                         int w4 = inStr.length() - 1;
                         char ch4 = inStr.charAt(w4);
                         if ((ch4 == '+') || (ch4 == '-') || (ch4 == '*') || (ch4 == '/')) {
                             inStr = inStr.substring(0, w4);
                         }
-                        inStr += '/';
-                        Ans.setText(inStr);
-                        break;
+                    }
+                    inStr += '/';
+                    Ans.setText(inStr);
+                    break;
 
+                case R.id.bdot:
+                    inStr += ".";
+                    Ans.setText(inStr);
+                    break;
 
-                    case R.id.bdot:
-                        inStr += ".";
-                        Ans.setText(inStr);
-                        break;
+                case R.id.bAC:
+                    inStr = "";
+                    Ans.setText(inStr);
+                    break;
+                case R.id.bC:
+                    inStr = inStr.substring(0, inStr.length() - 1);
+                    Ans.setText(inStr);
+                    break;
 
+                case R.id.bAns:
+                    String s = "";
+                    count = 0;
+                    double t;
 
-                    case R.id.bAC:
-                        inStr = "";
-                        Ans.setText(inStr);
-                        break;
-                    case R.id.bC:
-                        inStr = inStr.substring(0, inStr.length() - 1);
-                        Ans.setText(inStr);
-                        break;
+                    try {
+                        t = Third();
+                        s = Double.toString(t);
+                    } catch (Exception e) {
+                        s = "incorrect";
+                    }
 
-                    case R.id.bAns:
-                        String s = "";
-                        count = 0;
-                        double t;
-
-                        try {
-                            t = First();
-                            s = Double.toString(t);
-                        } catch (Exception e) {
-                            s = "incorrect";
-                        }
-
-                        Ans.setText(s);
-                        inStr = s;
-                        break;
-                }
-            } catch (Exception e) {
-                Ans.setText("incorrect input");
+                    Ans.setText(s);
+                    inStr = s;
+                    break;
             }
+        } catch (Exception e) {
+            Ans.setText("incorrect input");
+            inStr = "";
         }
     }
 }
